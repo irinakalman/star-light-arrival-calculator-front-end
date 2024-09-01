@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function StarSearch() {
   const [date, setDate] = useState(""); // store the selected date
   const [star, setStar] = useState(null); // store the retrieved star
 
   const handleDateChange = (event) => {
-    let v;
+    let value;
     let dISO;
 
-    v = event.target.value;
+    value = event.target.value;
 
-    dISO = new Date(v).toISOString();
+    dISO = new Date(value).toISOString();
 
     setDate(dISO);
   };
@@ -52,10 +52,25 @@ export default function StarSearch() {
     }
   };
 
+  useEffect(() => {
+    if (star && window.A) {
+      // Initialize Aladin Lite after the star is set and A is available globally
+      const aladin = window.A.aladin('#aladin-lite-div', {
+        fov: 0.3, // Field of view, adjust as needed
+        target: star,
+        projection: "AIT",
+        cooFrame: 'equatorial',
+        showCooGridControl: true,
+        showSimbadPointerControl: true,
+        showCooGrid: true
+      });
+    }
+  }, [star]);
+
   return (
     <>
       
-      <div className="flex flex-row">
+      <div className="flex flex-row max-w-lg mx-auto lg:max-w-lg px-4 mt-8">
         <input onChange={handleDateChange}
           className="mt-0 block w-full px-3 border-0 focus:ring-0 focus:border-black"
           type="date"
@@ -67,9 +82,10 @@ export default function StarSearch() {
         
       </div>
       {star && (
-            <div className="mt-4">
+            <div className="mt-8">
                 <h2 className="text-2xl text-white">Star for your date is:</h2>
                 <p className="text-white text-xl">{star}</p>
+                <div className="left-1/2 transform -translate-x-1/2" id="aladin-lite-div" style={{ width: "800px", height: "600px", marginTop: "50px" }}></div>
             </div>
         )}
     </>
