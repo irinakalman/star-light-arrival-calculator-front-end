@@ -26,8 +26,8 @@ function App() {
         </div> */}
 
         <div className="max-w-lg mx-auto lg:max-w-lg px-4 mt-8">
-          <h1 className="text-3xl pb-8 mb-5 text-white">
-            Please choose your date of birth to see your star ⭐
+          <h1 className="text-3xl pb-6 mb-5 text-white after:content-[''] after:bg-[url('/stars.svg')] after:bg-no-repeat after:bg-contain after:w-6 after:h-6 after:inline-block after:ml-3">
+            Please choose your date of birth to see your star
           </h1>
           
         </div>
